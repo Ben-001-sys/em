@@ -28,6 +28,7 @@ exports.getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({ user: req.user.id }); // filtering by user
     res.json(tasks);
+    console.log("working")
   } catch (error) {
     res.status(500).send("Error fetching tasks: " + error.message);
   }
