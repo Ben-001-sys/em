@@ -4,17 +4,20 @@ const userController = require("../controllers/userControllers");
 const task = require("../controllers/taskControllers");
 const auth = require("../middleware/authMiddleware");
 
-route.post("/", userController.createUser);
+// USER ROUTES
+route.post("/register", userController.createUser);
 route.post("/login", userController.login);
-route.get("/", userController.getUsers);
-route.get("/:id", userController.getUserById);
-route.put("/:id", userController.updateUsers);
-route.delete("/:id", userController.deleteUser);
 
-route.post("/task", auth, task.createTask);
-route.get("/get", auth, task.getTasks);
-route.get("/:id", auth, task.getTaskById);
-route.put("/:id", auth, task.updateTasks);
-route.delete("/:id", auth, task.deleteTask);
+route.get("/users", userController.getUsers);
+route.get("/users/:id", userController.getUserById);
+route.put("/users/:id", userController.updateUsers);
+route.delete("/users/:id", userController.deleteUser);
+
+// TASK ROUTES (Protected)
+route.post("/tasks", auth, task.createTask);        // Create
+route.get("/tasks", auth, task.getTasks);           // Get all tasks for logged-in user
+route.get("/tasks/:id", auth, task.getTaskById);    // Get one task (owned by user)
+route.put("/tasks/:id", auth, task.updateTasks);    // Update
+route.delete("/tasks/:id", auth, task.deleteTask);  // Delete
 
 module.exports = route;
